@@ -1,59 +1,56 @@
-# ProductCatalog
+# Product Catalog Challenge
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+## Task
 
-## Development server
+Build a Product Catalog Single Page Application (SPA) for browsing and managing products. You will use the **Fake Store API** https://fakestoreapi.com/ as your data source.
+
+### Requirements:
+
+- **Overview Page:** Implement an overview page that displays a list of products with their title, image, price, and a truncated description.
+- **Detail Page:** Implement a product detail page that shows the complete product information (full description, category, ratings, etc.).
+- **Product Creation:** Create a form to simulate adding a new product to the catalog.
+- **Best Practices:** Consider UX best practices, accessibility, and web semantics. It doesn't have to look incredibly fancy, but it should be clean and highly usable.
+- **Getting Started:** Use the pre-configured `@ngneat/query` setup to manage your API state efficiently.
+
+---
+
+## What We Look For
+
+This challenge is not about racing to finish every single requirement; it's about showing us how you work, how you think, and what you value as an engineer. **Please invest no more than 2 to 3 hours of your time.**
+
+Please organize, design, test, and document your solution the way you normally would in a production environment. We completely understand this time budget means making compromises.
+
+### Documentation Requirement:
+
+Please use the bottom of this README to document:
+
+- Your technical trade-offs and the rationale behind your choices.
+- What you would do differently, or what you would focus on next if you had more time (e.g., specific architectural improvements, edge-case testing, advanced UI features).
+
+---
+
+## Submission
+
+Please send us the link to your repository when you are finished. This should be completed at least **24 hours before your scheduled interview**. We will walk through your codebase and discuss your solution together during the interview.
+
+---
+
+## Helpful Links
+
+- [Fake Store API Docs](https://fakestoreapi.com/docs)
+- [@ngneat/query Documentation](https://github.com/ngneat/query)
+- [Angular Documentation](https://angular.dev/)
+
+---
+
+## Development & Tooling
+
+This project was generated using Angular CLI version 21.2.11.
+
+### Development Server
 
 To start a local development server, run:
 
 ```bash
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
