@@ -20,6 +20,8 @@ This challenge is not about racing to finish every single requirement; it's abou
 
 Please organize, design, test, and document your solution the way you normally would in a production environment. We understand that this timeline requires trade-offs.
 
+The use of AI is mandatory, but the ownership of every technical decision is yours.
+
 ### Documentation Requirement:
 
 Please use the bottom of this README to document:
