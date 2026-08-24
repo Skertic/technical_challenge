@@ -18,7 +18,7 @@ Build a Product Catalog Single Page Application (SPA) for browsing and managing 
 
 This challenge is not about racing to finish every single requirement; it's about showing us how you work, how you think, and what you value as an engineer. **Please invest no more than 2 to 3 hours of your time.**
 
-Please organize, design, test, and document your solution the way you normally would in a production environment. We completely understand this time budget means making compromises.
+Please organize, design, test, and document your solution the way you normally would in a production environment. We understand that this timeline requires trade-offs.
 
 ### Documentation Requirement:
 
