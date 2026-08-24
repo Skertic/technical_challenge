@@ -31,7 +31,7 @@ Please use the bottom of this README to document:
 
 ## Submission
 
-Please send us the link to your repository when you are finished. This should be completed at least **24 hours before your scheduled interview**. We will walk through your codebase and discuss your solution together during the interview.
+Clone this repo and send us the link to your repository when you are finished. This should be completed at least **24 hours before your scheduled interview**. We will walk through your codebase and discuss your solution together during the interview.
 
 ---
 
