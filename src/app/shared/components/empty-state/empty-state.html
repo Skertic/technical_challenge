@@ -1,0 +1,13 @@
+@let emptyTitle = title();
+@let emptyMessage = message();
+@let hasAction = showAction();
+@let buttonLabel = actionLabel();
+
+<div class="state">
+  <span class="symbol" aria-hidden="true">&#8981;</span>
+  <h2>{{ emptyTitle }}</h2>
+  <p>{{ emptyMessage }}</p>
+  @if (hasAction) {
+    <p-button [label]="buttonLabel" severity="secondary" (onClick)="action.emit()" />
+  }
+</div>

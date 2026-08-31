@@ -1,0 +1,71 @@
+form {
+  display: grid;
+  gap: 1.35rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+label {
+  color: var(--ink-strong);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+label span {
+  color: var(--danger);
+}
+input,
+textarea {
+  width: 100%;
+}
+textarea {
+  resize: vertical;
+}
+:host ::ng-deep .control {
+  width: 100%;
+}
+
+.help-text,
+.error-message {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.help-text {
+  color: var(--ink-muted);
+}
+.error-message {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 38rem) {
+  form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .full-width {
+    grid-column: auto;
+  }
+  :host ::ng-deep .actions .p-button {
+    width: 100%;
+  }
+}

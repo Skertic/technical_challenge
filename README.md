@@ -1,58 +1,89 @@
-# Product Catalog Challenge
+# Product Catalog
 
-## Task
+A responsive Angular single-page application for browsing product data, viewing product details, and simulating product creation with the [Fake Store API](https://fakestoreapi.com/).
 
-Build a Product Catalog Single Page Application (SPA) for browsing and managing products. You will use the **Fake Store API** https://fakestoreapi.com/ as your data source.
+## Features
 
-### Requirements:
+- Responsive product catalog with accessible product cards
+- Client-side title/category search, category filtering, and sorting
+- Product details with full descriptions, pricing, and rating information
+- Strongly typed reactive product creation form
+- Clear simulated-creation confirmation
+- Skeleton loading, retryable error, not-found, and empty-filter states
+- Lazy-loaded routes and keyboard-friendly navigation
 
-- **Overview Page:** Implement an overview page that displays a list of products with their title, image, price, and a truncated description.
-- **Detail Page:** Implement a product detail page that shows the complete product information (full description, category, ratings, etc.).
-- **Product Creation:** Create a form to simulate adding a new product to the catalog.
-- **Best Practices:** Consider UX best practices, accessibility, and web semantics. It doesn't have to look incredibly fancy, but it should be clean and highly usable.
-- **Getting Started:** Use the pre-configured `@ngneat/query` setup to manage your API state efficiently.
+## Tech stack
 
----
+- Angular 21 with standalone components, Signals, and `OnPush` change detection
+- PrimeNG 21.1.9 with the PrimeUIX Aura theme
+- `@ngneat/query` 3.4 for API state and caching
+- Angular Router and Reactive Forms
+- Fake Store API
+- Vitest through Angular's built-in unit-test runner
 
-## What We Look For
+## Running locally
 
-This challenge is not about racing to finish every single requirement; it's about showing us how you work, how you think, and what you value as an engineer. **Please invest no more than 2 to 3 hours of your time.**
-
-Please organize, design, test, and document your solution the way you normally would in a production environment. We understand that this timeline requires trade-offs.
-
-The use of AI is mandatory, but the ownership of every technical decision is yours.
-
-### Documentation Requirement:
-
-Please use the bottom of this README to document:
-
-- Your technical trade-offs and the rationale behind your choices.
-- What you would do differently, or what you would focus on next if you had more time (e.g., specific architectural improvements, edge-case testing, advanced UI features).
-
----
-
-## Submission
-
-Clone this repo and send us the link to your repository when you are finished. This should be completed at least **24 hours before your scheduled interview**. We will walk through your codebase and discuss your solution together during the interview.
-
----
-
-## Helpful Links
-
-- [Fake Store API Docs](https://fakestoreapi.com/docs)
-- [@ngneat/query Documentation](https://github.com/ngneat/query)
-- [Angular Documentation](https://angular.dev/)
-
----
-
-## Development & Tooling
-
-This project was generated using Angular CLI version 21.2.11.
-
-### Development Server
-
-To start a local development server, run:
+Requirements: a Node.js version supported by Angular 21 and npm.
 
 ```bash
-ng serve
+npm install
+npm start
 ```
+
+Open `http://localhost:4200`.
+
+## Build and testing
+
+```bash
+npm run build
+npm test -- --watch=false
+```
+
+The repository does not currently include a lint command or lint configuration.
+
+## Routes
+
+- `/products` — catalog, search, filters, and sorting
+- `/products/new` — simulated product creation
+- `/products/:id` — product details
+
+The root route and unknown URLs redirect to `/products`.
+
+## Architecture
+
+The application uses a compact, feature-based structure:
+
+```text
+src/app/
+  core/
+    api/                 Centralized Fake Store HTTP access
+    models/              API domain models and creation DTOs
+  features/products/
+    data-access/         @ngneat/query definitions and stable keys
+    facades/             Route-scoped page state and user actions
+    pages/               Route-level catalog, detail, and create components
+    ui/                  Product card and product form components
+  shared/components/     Reusable page header, error, and empty states
+```
+
+Server state stays in `@ngneat/query`. The list, details, and categories use stable query keys and a five-minute `staleTime`, which avoids unnecessary repeat requests while navigating. Product creation uses a query mutation and exposes its pending/error state directly to the UI.
+
+Signals hold only synchronous UI state such as the search term, category, sort order, submission attempt, and simulated success result. Derived product results use `computed()` and never mutate the cached API array.
+
+Route-scoped facades coordinate routing, query state, local Signals, derived values, and user actions. Page components remain composition-only, while reusable UI components receive typed inputs and expose interactions through outputs. HTTP endpoint construction is isolated in `ProductApiService`.
+
+## API limitation
+
+Fake Store API `POST /products` operations are simulated. A successful response includes an ID, but the new product is not permanently stored and will not appear in a later catalog request. The UI states this explicitly and does not inject the response into the cached product list.
+
+## Technical trade-offs
+
+- The catalog fetches the complete small dataset once, then performs search, filtering, and sorting locally. Server-side pagination would be preferable for a large dataset.
+- Product detail routing reads the route snapshot because links navigate between different route components in this assignment. A stream or router input binding would be appropriate if same-component parameter changes were a core flow.
+- Ratings use lightweight semantic text and a star glyph rather than adding form-oriented rating behavior to read-only displays.
+- The UI uses a focused set of PrimeNG controls and native semantic elements instead of wrapping every visual element in a component library abstraction.
+- Query errors remain intact for `@ngneat/query`; user-friendly messages are selected only at the presentation boundary.
+
+## Next steps
+
+With more time, the next priorities would be end-to-end tests for keyboard and mobile flows, automated accessibility checks, image-error fallbacks, a configured lint task, and API schema validation for untrusted runtime responses.

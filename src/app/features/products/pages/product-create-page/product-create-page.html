@@ -1,0 +1,52 @@
+@let created = createdProduct();
+@let creation = createResult();
+@let categories = categoriesResult();
+
+<app-page-header
+  title="Add a product"
+  description="Create a sample catalog item and send it to the Fake Store API."
+>
+  <a class="back-link" routerLink="/products"><span aria-hidden="true">←</span> Products</a>
+</app-page-header>
+
+<div class="form-card">
+  @if (created; as product) {
+    <div class="submission-message" role="status">
+      <p-message
+        severity="success"
+        [text]="
+          '“' +
+          product.title +
+          '” was accepted by the API as product #' +
+          product.id +
+          '. This was a simulated creation and was not permanently saved.'
+        "
+      />
+      <a class="catalog-link" routerLink="/products">Return to the catalog</a>
+    </div>
+  }
+
+  @if (creation.isError) {
+    <p-message
+      severity="error"
+      text="We couldn't submit the product. Check your connection and try again."
+    />
+  }
+
+  @if (categories.isError) {
+    <div class="category-warning">
+      <p-message
+        severity="warn"
+        text="Categories couldn't be loaded. You can type a category manually."
+      />
+      <p-button label="Retry" [text]="true" (onClick)="retryCategories()" />
+    </div>
+  }
+
+  <app-product-form
+    [categories]="categories.data ?? []"
+    [categoriesLoading]="categories.isPending"
+    [submitting]="creation.isPending"
+    (productSubmit)="createProduct($event)"
+  />
+</div>

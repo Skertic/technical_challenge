@@ -1,0 +1,9 @@
+@let errorMessage = message();
+@let canRetry = showRetry();
+
+<div class="state" role="alert">
+  <p-message severity="error" [text]="errorMessage" />
+  @if (canRetry) {
+    <p-button label="Try again" severity="secondary" (onClick)="retry.emit()" />
+  }
+</div>

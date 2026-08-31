@@ -1,0 +1,125 @@
+@let isSubmitting = submitting();
+@let availableCategories = categoryOptions();
+@let areCategoriesLoading = categoriesLoading();
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div class="field full-width">
+    <label for="title">Title <span aria-hidden="true">*</span></label>
+    <input
+      pInputText
+      id="title"
+      type="text"
+      formControlName="title"
+      autocomplete="off"
+      [attr.aria-invalid]="showError('title')"
+      [attr.aria-describedby]="showError('title') ? 'title-error' : null"
+    />
+    @if (showError('title')) {
+      <small id="title-error" class="error-message">
+        {{
+          hasError('title', 'required')
+            ? 'Title is required.'
+            : 'Title must be at least 3 characters.'
+        }}
+      </small>
+    }
+  </div>
+
+  <div class="field">
+    <label for="price">Price (USD) <span aria-hidden="true">*</span></label>
+    <p-inputnumber
+      inputId="price"
+      formControlName="price"
+      mode="currency"
+      currency="USD"
+      locale="en-US"
+      [minFractionDigits]="2"
+      [attr.aria-invalid]="showError('price')"
+      [attr.aria-describedby]="showError('price') ? 'price-error' : null"
+      styleClass="control"
+    />
+    @if (showError('price')) {
+      <small id="price-error" class="error-message">Price must be greater than 0.</small>
+    }
+  </div>
+
+  <div class="field">
+    <label for="category">Category <span aria-hidden="true">*</span></label>
+    <p-select
+      inputId="category"
+      formControlName="category"
+      [options]="availableCategories"
+      [loading]="areCategoriesLoading"
+      [editable]="true"
+      placeholder="Select or enter a category"
+      [attr.aria-invalid]="showError('category')"
+      [attr.aria-describedby]="showError('category') ? 'category-error' : null"
+      styleClass="control"
+    />
+    @if (showError('category')) {
+      <small id="category-error" class="error-message">Category is required.</small>
+    }
+  </div>
+
+  <div class="field full-width">
+    <label for="description">Description <span aria-hidden="true">*</span></label>
+    <textarea
+      pTextarea
+      id="description"
+      formControlName="description"
+      rows="6"
+      [attr.aria-invalid]="showError('description')"
+      [attr.aria-describedby]="showError('description') ? 'description-error' : null"
+    ></textarea>
+    @if (showError('description')) {
+      <small id="description-error" class="error-message">
+        {{
+          hasError('description', 'required')
+            ? 'Description is required.'
+            : 'Description must be at least 10 characters.'
+        }}
+      </small>
+    }
+  </div>
+
+  <div class="field full-width">
+    <label for="image">Image URL <span aria-hidden="true">*</span></label>
+    <input
+      pInputText
+      id="image"
+      type="url"
+      formControlName="image"
+      autocomplete="url"
+      [attr.aria-invalid]="showError('image')"
+      [attr.aria-describedby]="showError('image') ? 'image-error image-help' : 'image-help'"
+    />
+    <small id="image-help" class="help-text"
+      >Use a direct HTTP or HTTPS link to a product image.</small
+    >
+    @if (showError('image')) {
+      <small id="image-error" class="error-message">
+        {{
+          hasError('image', 'required')
+            ? 'Image URL is required.'
+            : 'Please enter a valid HTTP or HTTPS URL.'
+        }}
+      </small>
+    }
+  </div>
+
+  <div class="form-notice full-width">
+    <p-message
+      severity="info"
+      text="Fake Store API submissions are simulated and are not permanently saved."
+    />
+  </div>
+
+  <div class="actions full-width">
+    <p-button
+      type="submit"
+      label="Create product"
+      [loading]="isSubmitting"
+      [disabled]="isSubmitting"
+    />
+  </div>
+</form>

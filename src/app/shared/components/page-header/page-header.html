@@ -1,0 +1,13 @@
+@let headerTitle = title();
+@let headerDescription = description();
+
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Product Catalog</p>
+    <h1>{{ headerTitle }}</h1>
+    @if (headerDescription) {
+      <p class="description">{{ headerDescription }}</p>
+    }
+  </div>
+  <ng-content />
+</header>

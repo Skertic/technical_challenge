@@ -1,0 +1,38 @@
+@let productInfo = product();
+<p-card class="product-card">
+  <a
+    class="image-link"
+    [routerLink]="['/products', productInfo.id]"
+    [attr.aria-label]="'View details for ' + productInfo.title"
+  >
+    <img
+      class="product-image"
+      [src]="productInfo.image"
+      [alt]="productInfo.title"
+      width="320"
+      height="320"
+      loading="lazy"
+    />
+  </a>
+
+  <div class="card-content">
+    <p-tag [value]="productInfo.category" severity="secondary" />
+    <h2>
+      <a [routerLink]="['/products', productInfo.id]">{{ productInfo.title }}</a>
+    </h2>
+    <p class="description">{{ productInfo.description }}</p>
+
+    <div class="rating" [attr.aria-label]="productInfo.rating.rate + ' out of 5 stars'">
+      <span aria-hidden="true">★</span>
+      {{ productInfo.rating.rate | number: '1.1-1' }}
+      <span class="rating-count">({{ productInfo.rating.count }})</span>
+    </div>
+
+    <div class="card-footer">
+      <strong>{{ productInfo.price | currency: 'USD' }}</strong>
+      <a class="details-link" [routerLink]="['/products', productInfo.id]">
+        View details <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</p-card>

@@ -1,0 +1,108 @@
+@let products = productsResult();
+@let categories = categoriesResult();
+@let visibleProducts = filteredProducts();
+@let currentSearch = searchTerm();
+@let currentCategory = selectedCategory();
+@let currentSort = sortOrder();
+@let availableCategories = categoryOptions();
+
+<app-page-header
+  title="Discover products"
+  description="Browse everyday essentials, electronics, jewellery, and clothing from the Fake Store catalog."
+>
+  <a class="primary-link" routerLink="/products/new">Add a product</a>
+</app-page-header>
+
+<section class="filters" aria-label="Product filters">
+  <div class="field search-field">
+    <label for="product-search">Search products</label>
+    <div class="search-control">
+      <span aria-hidden="true">⌕</span>
+      <input
+        #searchInput
+        id="product-search"
+        type="search"
+        [value]="currentSearch"
+        (input)="updateSearch(searchInput.value)"
+        placeholder="Search by title or category"
+      />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="category-filter">Category</label>
+    <p-select
+      inputId="category-filter"
+      [options]="availableCategories"
+      optionLabel="label"
+      optionValue="value"
+      [ngModel]="currentCategory"
+      (ngModelChange)="updateCategory($event)"
+      [loading]="categories.isPending"
+      styleClass="filter-select"
+    />
+  </div>
+
+  <div class="field">
+    <label for="sort-products">Sort by</label>
+    <p-select
+      inputId="sort-products"
+      [options]="sortOptions"
+      optionLabel="label"
+      optionValue="value"
+      [ngModel]="currentSort"
+      (ngModelChange)="updateSort($event)"
+      styleClass="filter-select"
+    />
+  </div>
+</section>
+
+@if (categories.isError) {
+  <div class="category-warning">
+    <p-message
+      severity="warn"
+      text="Categories are unavailable. You can still browse and search products."
+    />
+    <p-button label="Retry categories" [text]="true" (onClick)="retryCategories()" />
+  </div>
+}
+
+@if (products.isPending) {
+  <section class="product-grid" aria-label="Loading products" aria-busy="true">
+    @for (placeholder of [1, 2, 3, 4, 5, 6, 7, 8]; track placeholder) {
+      <div class="skeleton-card">
+        <p-skeleton height="14rem" borderRadius="0.75rem" />
+        <p-skeleton width="35%" height="1.4rem" />
+        <p-skeleton height="1.4rem" />
+        <p-skeleton width="80%" height="1.4rem" />
+        <p-skeleton height="4rem" />
+      </div>
+    }
+  </section>
+} @else if (products.isError) {
+  <app-error-state
+    message="We couldn't load the products. Please try again."
+    (retry)="retryProducts()"
+  />
+} @else {
+  <div class="results-summary" aria-live="polite">
+    <strong>{{ visibleProducts.length }}</strong>
+    {{ visibleProducts.length === 1 ? 'product' : 'products' }}
+  </div>
+
+  @if (visibleProducts.length) {
+    <section class="product-grid" aria-label="Products">
+      @for (product of visibleProducts; track product.id) {
+        <app-product-card [product]="product" />
+      }
+    </section>
+  } @else {
+    <app-empty-state
+      title="No products match your filters"
+      message="Try another search or clear the selected filters."
+      [showAction]="true"
+      actionLabel="Reset filters"
+      (action)="resetFilters()"
+    />
+  }
+}
